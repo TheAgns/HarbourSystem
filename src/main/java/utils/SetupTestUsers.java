@@ -1,15 +1,70 @@
 package utils;
 
 
-import entities.Role;
-import entities.User;
+import entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 public class SetupTestUsers {
 
+  public static void setupOwners(){
+    EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+    EntityManager em = emf.createEntityManager();
+
+    Owner owner1 = new Owner("test1","Lars1",11111111);
+    Owner owner2 = new Owner("test2","Toke2",22222222);
+    Owner owner3 = new Owner("test3","Bjarke3",33333333);
+    em.getTransaction().begin();
+    em.persist(owner1);
+    em.persist(owner2);
+    em.persist(owner3);
+    em.getTransaction().commit();
+  }
+  public static void addBoatOwner() {
+    EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+    EntityManager em = emf.createEntityManager();
+    Boat boat1 = new Boat("BMW","i8","hurtighurtig","wwww.hurtigebaade.dk");
+    Boat boat2 = new Boat("AUDI","a8","speed baad","wwww.hurtigebaade.dk");
+    Owner owner1 = new Owner("jeg har en baad","testvej",11111111);
+    Owner owner2 = new Owner("jeg har begge baade","lugevej",22222222);
+    owner1.addBoatToOwner(boat1);
+    owner2.addBoatToOwner(boat2);
+    owner2.addBoatToOwner(boat1);
+    em.getTransaction().begin();
+
+    em.persist(owner1);
+    em.persist(owner2);
+    em.getTransaction().commit();
+  }
+
+  public static void addBoatToHarbour(){
+    EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+    EntityManager em = emf.createEntityManager();
+
+    Harbour harbour1 = new Harbour("Mosevej","he",100);
+    Harbour harbour2 = new Harbour("Nejvej","hejmeddaj",200);
+    Harbour harbour3 = new Harbour("Javej","NejtilDigmedmig",400);
+
+    Boat boat1 = new Boat("Audi","a","hurtighurtig","www.baad.dk");
+    Boat boat2 = new Boat("Suzuki","b","sickspeed","www.bilbaad.dk");
+    Boat boat3 = new Boat("TEST1","isa8","hurtigmegethurtig","wwww.hurrtigebaade.dk");
+    Boat boat4 = new Boat("TEST2","ajk8","speed boatbaad","wwww.hurrtigebaade.dk");
+
+    harbour1.addBoat(boat1);
+    harbour1.addBoat(boat2);
+    harbour3.addBoat(boat3);
+    harbour2.addBoat(boat4);
+    em.getTransaction().begin();
+    em.persist(harbour1);
+    em.persist(harbour2);
+    em.persist(harbour3);
+    em.getTransaction().commit();
+
+  }
+
   public static void main(String[] args) {
+
 
     EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
     EntityManager em = emf.createEntityManager();
@@ -20,9 +75,10 @@ public class SetupTestUsers {
     // Also, either delete this file, when users are created or rename and add to .gitignore
     // Whatever you do DO NOT COMMIT and PUSH with the real passwords
 
-    User user = new User("user", "test");
-    User admin = new User("admin", "test");
-    User both = new User("user_admin", "test");
+    User user = new User("user", "test1");
+    User admin = new User("admin", "test2");
+    User both = new User("user_admin", "test3");
+
 
     if(admin.getUserPass().equals("test")||user.getUserPass().equals("test")||both.getUserPass().equals("test"))
       throw new UnsupportedOperationException("You have not changed the passwords");
@@ -44,7 +100,7 @@ public class SetupTestUsers {
     System.out.println("Testing user with OK password: " + user.verifyPassword("test"));
     System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
     System.out.println("Created TEST Users");
-   
+
   }
 
 }

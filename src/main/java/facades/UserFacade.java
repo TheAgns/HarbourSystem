@@ -1,5 +1,8 @@
 package facades;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.MalformedJsonException;
 import dtos.BoatDTO;
 import dtos.OwnerDTO;
 import dtos.RenameMeDTO;
@@ -129,5 +132,34 @@ public class UserFacade {
         return ownerDTOS;
     }
 
+    //US 4 As an admin I would like to create a new boat
+    public BoatDTO createBoat(String jsonBoat){
+        EntityManager em = emf.createEntityManager();
+        //Boat boat = new Boat(boatDTO.getBrand(), boatDTO.getMake(), boatDTO.getName(), boatDTO.getImage());
+        String brand;
+        String make;
+        String name;
+        String image;
+        try {
+            JsonObject json = JsonParser.parseString(jsonBoat).getAsJsonObject();
+            brand = json.get("brand").getAsString();
+            make = json.get("make").getAsString();
+            name = json.get("name").getAsString();
+            image = json.get("image").getAsString();
+        }catch(WebApplicationException e){
+            throw new WebApplicationException("Not correct json");
+        }
+        try {
+            Boat boat = new Boat(brand,make,name,image);
+            em.getTransaction().begin();
+            em.persist(boat);
+            em.getTransaction().commit();
+            return new BoatDTO(boat);
+        } catch (Exception e) {
+            throw new WebApplicationException("Couldn't create a new boat");
+        } finally {
+            em.close();
+        }
+    }
 
 }

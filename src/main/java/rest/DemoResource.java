@@ -134,6 +134,19 @@ public class DemoResource {
         SetupTestUsers.addBoatToHarbour();
         return "You have been boated to harbour";
     }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/createBoat")
+    public String createBoat(String jsonBoat){
+        try {
+            BoatDTO boatDTO = userFacade.createBoat(jsonBoat);
+            return gson.toJson(boatDTO);
+        }catch(WebApplicationException e){
+            throw new WebApplicationException(e.getMessage());
+        }
+    }
 }
 //step 1 populateOwners
 //step 2 addBoatToOwner

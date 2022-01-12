@@ -21,7 +21,8 @@ public class Harbour {
     @Column(name = "capacity", length = 255)
     private int capacity;
 
-    @OneToMany(cascade = CascadeType.PERSIST)
+    //@OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "harbour", cascade = CascadeType.PERSIST)
     private List<Boat> boatList;
 
     public Harbour(String name, String address, int capacity) {

@@ -1,5 +1,7 @@
 package entities;
 
+import dtos.BoatDTO;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +41,14 @@ public class Boat {
     }
 
     public Boat(String brand, String make, String name, String image) {
+        this.brand = brand;
+        this.make = make;
+        this.name = name;
+        this.image = image;
+        this.owners = new ArrayList<Owner>();
+    }
+
+    public Boat(BoatDTO boatDTO) {
         this.brand = brand;
         this.make = make;
         this.name = name;

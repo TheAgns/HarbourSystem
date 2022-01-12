@@ -20,22 +20,26 @@ public class SetupTestUsers {
     em.persist(owner2);
     em.persist(owner3);
     em.getTransaction().commit();
+
+
   }
   public static void addBoatOwner() {
     EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
     EntityManager em = emf.createEntityManager();
-    Boat boat1 = new Boat("BMW","i8","hurtighurtig","wwww.hurtigebaade.dk");
-    Boat boat2 = new Boat("AUDI","a8","speed baad","wwww.hurtigebaade.dk");
-    Owner owner1 = new Owner("jeg har en baad","testvej",11111111);
-    Owner owner2 = new Owner("jeg har begge baade","lugevej",22222222);
-    owner1.addBoatToOwner(boat1);
-    owner2.addBoatToOwner(boat2);
-    owner2.addBoatToOwner(boat1);
+
+    Boat boat11 = new Boat("BMW","i8","hurtighurtig","wwww.hurtigebaade.dk");
+    Boat boat22 = new Boat("AUDI","a8","speed baad","wwww.hurtigebaade.dk");
+    Owner ownerBoat1 = new Owner("jeg har en baad","testvej",11111111);
+    Owner ownerBoat2 = new Owner("jeg har begge baade","lugevej",22222222);
+    ownerBoat1.addBoatToOwner(boat11);
+    ownerBoat2.addBoatToOwner(boat22);
+    ownerBoat2.addBoatToOwner(boat11);
     em.getTransaction().begin();
 
-    em.persist(owner1);
-    em.persist(owner2);
+    em.persist(ownerBoat1);
+    em.persist(ownerBoat2);
     em.getTransaction().commit();
+
   }
 
   public static void addBoatToHarbour(){
@@ -60,7 +64,6 @@ public class SetupTestUsers {
     em.persist(harbour2);
     em.persist(harbour3);
     em.getTransaction().commit();
-
   }
 
   public static void main(String[] args) {
@@ -100,6 +103,19 @@ public class SetupTestUsers {
     System.out.println("Testing user with OK password: " + user.verifyPassword("test"));
     System.out.println("Testing user with wrong password: " + user.verifyPassword("test1"));
     System.out.println("Created TEST Users");
+
+
+    //setupOwners
+
+
+
+    //addBoatOwner
+
+
+    //addBoatToHarbour
+
+
+
 
   }
 
